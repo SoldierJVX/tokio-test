@@ -16,12 +16,12 @@ public class Customer {
 	private Long id;
 
 	@Column(nullable = false)
-	@NotEmpty
+	@NotEmpty(message = "is required")
 	private String name;
 
 	@Column(nullable = false)
-	@NotEmpty
-	@Email
+	@NotEmpty(message = "is required")
+	@Email(message = "insert a valid email")
 	private String email;
 
 	public Long getId() {

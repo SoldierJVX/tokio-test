@@ -11,6 +11,8 @@ import org.springframework.web.server.ResponseStatusException;
 import com.example.api.domain.Customer;
 import com.example.api.service.CustomerService;
 
+import javax.validation.Valid;
+
 @RestController
 @RequestMapping("/customers")
 public class CustomerController {
@@ -34,14 +36,14 @@ public class CustomerController {
 	}
 
 	@PutMapping
-	public Customer edit(@RequestBody Customer theCustomer){
+	public Customer edit(@Valid @RequestBody Customer theCustomer){
 		service.save(theCustomer);
-
 		return theCustomer;
 	}
 
 	@PostMapping
-	public Customer store(@RequestBody Customer theCustomer){
+	@ResponseStatus(HttpStatus.CREATED)
+	public Customer store(@Valid @RequestBody Customer theCustomer){
 		Optional<Customer> tempCustomer = service.findById(theCustomer.getId());
 
 		if(tempCustomer.isPresent()){
