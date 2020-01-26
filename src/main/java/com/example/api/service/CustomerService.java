@@ -27,4 +27,11 @@ public class CustomerService {
 		return repository.findById(id);
 	}
 
+	public Customer save(Customer theCustomer) {
+		return repository.save(theCustomer);
+	}
+
+	public void deleteCustomer(Long customerId) {
+		repository.deleteById(customerId);
+	}
 }
