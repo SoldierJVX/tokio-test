@@ -34,8 +34,13 @@ public class CustomerController {
 
 	@GetMapping
 	public Page<Customer> findAll(HttpServletRequest request) {
-		int page = Integer.parseInt(request.getParameter("page"));
-		int size = Integer.parseInt(request.getParameter("size"));
+		int page = 0;
+		int size = 10;
+
+		if(request.getParameter("page") != null && request.getParameter("size") != null){
+			page = Integer.parseInt(request.getParameter("page"));
+			size = Integer.parseInt(request.getParameter("size"));
+		}
 
 		return customerService.findAllPaginated(page,size);
 	}
