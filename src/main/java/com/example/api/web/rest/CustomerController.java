@@ -6,14 +6,15 @@ import java.util.Optional;
 import com.example.api.domain.Address;
 import com.example.api.service.AddressService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.client.RestTemplate;
 import org.springframework.web.server.ResponseStatusException;
 
 import com.example.api.domain.Customer;
 import com.example.api.service.CustomerService;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 
 @RestController
@@ -32,9 +33,11 @@ public class CustomerController {
 	}
 
 	@GetMapping
-	public List<Customer> findAll() {
-		List<Customer> lstCustomer = customerService.findAll();
-		return lstCustomer;
+	public Page<Customer> findAll(HttpServletRequest request) {
+		int page = Integer.parseInt(request.getParameter("page"));
+		int size = Integer.parseInt(request.getParameter("size"));
+
+		return customerService.findAllPaginated(page,size);
 	}
 
 	@GetMapping("/{id}")
